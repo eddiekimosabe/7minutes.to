@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # The priority is based upon order of creation: first created -> highest priority.
+devise_for :users, :controllers => { :registrations => "registrations" }  # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  get '/users/:id/profile' => 'profile#edit'
+  get '/users/:id/profile' => 'profile#edit', as: :profile
   post 'users/:id/profile' => 'profile#update'
 
   # Example of regular route:
