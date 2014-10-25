@@ -15,3 +15,8 @@
  *= require foundation_and_overrides
 
  */
+
+.row.full-width {
+  width: 100%;
+  max-width: 100%;
+}
