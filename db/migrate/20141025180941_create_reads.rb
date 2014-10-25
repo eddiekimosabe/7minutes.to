@@ -1,7 +1,8 @@
-class Reads < ActiveRecord::Migration
+class CreateReads < ActiveRecord::Migration
   def change
-  	create_table :users do |t|
-  		t.string :title
+    create_table :reads do |t|
+
+    	t.string :title
   		t.string :excerpt
   		t.string :url
   		t.integer :read_time
@@ -9,6 +10,7 @@ class Reads < ActiveRecord::Migration
   		t.integer :user_id
 
   		t.timestamps
-  	end
+  		
+    end
   end
 end
