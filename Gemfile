@@ -28,7 +28,9 @@ gem 'spring',        group: :development
 
 gem 'devise'
 gem 'foundation-rails'
-gem 'pocket-ruby', '~> 0.0.5'
+gem 'faraday', '~> 0.9.0'
+gem 'pry-rails', :group => :development
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
