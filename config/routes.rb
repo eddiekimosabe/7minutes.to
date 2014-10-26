@@ -3,12 +3,13 @@ devise_for :users, :controllers => { :registrations => "registrations" }  # The 
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'profile#edit'
 
   get '/users/:id/profile' => 'profile#edit', as: :profile
   post 'users/:id/profile' => 'profile#update'
   get '/oauth' => 'profile#oauth'
-  get '/complete_oauth' => 'profile#complete_oauth'
+  get '/success' => 'profile#complete_oauth'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
