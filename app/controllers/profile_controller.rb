@@ -8,6 +8,6 @@ class ProfileController < ApplicationController
   end
 
   def complete_oauth
-    current_user.oauth
+    current_user.oauthd
   end
 end
