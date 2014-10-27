@@ -1,3 +1,4 @@
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -22,34 +23,50 @@ class User < ActiveRecord::Base
     self.access_token = JSON.parse(post.body)['access_token']
     self.save
     conn = Faraday.new('https://getpocket.com')
-    post = conn.post 'v3/get', { 'consumer_key' => ENV['POCKET_CONSUMER_KEY'], 'access_token' => self.access_token, "count" => "10", "detailType" => "complete"}, { 'X-Accept' => 'application/json' }
-    puts "*"*50
-    puts post.inspect
-    puts "*"*50
+    post = conn.post 'v3/get', { 'consumer_key' => ENV['POCKET_CONSUMER_KEY'], 'access_token' => self.access_token, "count" => "10", "detailType" => "complete", "contentType" => "article"}, { 'X-Accept' => 'application/json' }
+    # puts "*"*50
+    # JSON.parse(post.body)['list'].each do |t|
+    #   puts estimated_time(t[1]["word_count"].to_i)
+    # end
+    # # content = JSON.parse(post.body)['list'].first
+    # # puts content[1]["word_count"]
+    # #It's returned as a string! So remember to change it to an integer!
+    # puts "*"*50
+    return JSON.parse(post.body)
   end
 
+  def find_article_word_count
+    word_count_array = [] 
+    oauthd['list'].each do |article_object|
+      word_count_array << article_object[1]["word_count"]
+    end
+      return word_count_array
+  end
 
+  def find_estimated_article_time
+    find_article_word_count.each do |word_count|
+      num_word_count = word_count.to_i
+    puts estimated_time(num_word_count)
+    end
+  end
 
-#   def estimated_time(word_count)
-#   	@time = word_count/200.0 
+  def estimated_time(word_count)
+  	@time = word_count/200.0 
   	
-#   	if @time >= 60 
+  	if @time >= 60 
+  		@hour = (@time/60).floor
+  		@minutes = (@time%60).ceil
 
-#   		@hour = (@time/60).floor
-#   		@minutes = (@time%60).ceil
-
-#   		if @hour == 1 
-
-#   			return @hour.to_s + " " + "hour " + @minutes.to_s + " " + "minutes"
-#   		else
-#   			return @hour.to_s + " " + "hours " + @minutes.to_s + " " + "minutes"
-#   		end
-#   	else
-#   		return @time.to_s + " " + "minutes"
-
-#   	end
-
-#   end
+  		if @hour == 1 
+  			return @hour.to_s + " " + "hour " + @minutes.to_s + " " + "minutes"
+  		else
+  			return @hour.to_s + " " + "hours " + @minutes.to_s + " " + "minutes"
+  		end
+      
+  	else
+  		return @time.to_s + " " + "minutes"
+  	end
+  end
 
 end
   	# return time.to_s + " " + "minutes"
