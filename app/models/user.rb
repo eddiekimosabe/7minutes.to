@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
          has_many :reads
 
-  def request_token
+  def request_oauth_token
     conn = Faraday.new('https://getpocket.com')
     post = conn.post '/v3/oauth/request', { 'consumer_key' => ENV['POCKET_CONSUMER_KEY'], 'redirect_uri' => 'localhost:3000'}, { 'X-Accept' => 'application/json' }
 
@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
     return @code
   end
 
-  def oauthd
+  def complete_oauth
     conn = Faraday.new('https://getpocket.com')
     post = conn.post 'v3/oauth/authorize', { 'consumer_key' => ENV['POCKET_CONSUMER_KEY'], 'code' => self.code }, { 'X-Accept' => 'application/json' }
 
@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
 
   def find_article_word_count
     word_count_array = []
-    oauthd['list'].each do |article_object|
+    complete_oauth['list'].each do |article_object|
       word_count_array << article_object[1]["word_count"]
     end
       return word_count_array
