@@ -1,5 +1,6 @@
 
 class User < ActiveRecord::Base
+  include PocketLoader
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -40,8 +41,17 @@ class User < ActiveRecord::Base
     conn = Faraday.new('https://getpocket.com')
     returned_json = conn.post '/v3/get', { 'consumer_key' => ENV['POCKET_CONSUMER_KEY'], 'access_token' => self.access_token, "contentType" => "article", "detailType" => "complete" }, { 'X-Accept' => 'application/json' }
     unread_articles = JSON.parse(returned_json.body)
-    pp unread_articles
     return unread_articles
+  end
+
+  def add_pocket_articles(articles)
+    articles['list'].each do |article|
+      if article[1]['is_article'] == "1"
+        PocketLoader.add_article(article)
+        # pp test[1]['is_article']
+        # pp test[1]['word_count']
+      end
+    end
   end
 
   def find_article_word_count
