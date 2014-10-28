@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20141025180941) do
 
   create_table "reads", force: true do |t|
     t.string   "title"
-    t.string   "excerpt"
+    t.text     "excerpt"
     t.string   "url"
     t.integer  "read_time"
     t.boolean  "read?"

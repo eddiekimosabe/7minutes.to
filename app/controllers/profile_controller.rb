@@ -4,11 +4,12 @@ class ProfileController < ApplicationController
   end
 
   def oauth
-    redirect_to "https://getpocket.com/auth/authorize?request_token=#{current_user.request_token}&redirect_uri=#{"http://0.0.0.0:3000/success"}"
+    redirect_to "https://getpocket.com/auth/authorize?request_token=#{current_user.request_oauth_token}&redirect_uri=#{"http://0.0.0.0:3000/oauth/success"}"
   end
 
-  def show
-    # current_user.oauthd
-    current_user.find_estimated_article_time
+  def success
+    current_user.complete_oauth
+    current_user.add_pocket_articles(current_user.fetch_unread_articles_from_pocket)
+    # current_user.find_estimated_article_time
   end
 end
