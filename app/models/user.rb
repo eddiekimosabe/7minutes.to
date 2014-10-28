@@ -36,6 +36,14 @@ class User < ActiveRecord::Base
     return JSON.parse(post.body)
   end
 
+  def fetch_unread_articles_from_pocket
+    conn = Faraday.new('https://getpocket.com')
+    returned_json = conn.post '/v3/get', { 'consumer_key' => ENV['POCKET_CONSUMER_KEY'], 'access_token' => self.access_token, "contentType" => "article", "detailType" => "complete" }, { 'X-Accept' => 'application/json' }
+    unread_articles = JSON.parse(returned_json.body)
+    pp unread_articles
+    return unread_articles
+  end
+
   def find_article_word_count
     word_count_array = []
     complete_oauth['list'].each do |article_object|
