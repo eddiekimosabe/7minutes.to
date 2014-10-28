@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
 
   def success
     current_user.complete_oauth
-    current_user.fetch_unread_articles_from_pocket
+    current_user.add_pocket_articles(current_user.fetch_unread_articles_from_pocket)
     # current_user.find_estimated_article_time
   end
 end
