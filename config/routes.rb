@@ -8,7 +8,7 @@ devise_for :users, :controllers => { :registrations => "registrations" }  # The 
   get '/users/:id/profile' => 'profile#edit', as: :profile
   post 'users/:id/profile' => 'profile#update'
   get '/oauth' => 'profile#oauth'
-  get '/success' => 'profile#complete_oauth'
+  get '/success' => 'profile#show'
 
 
   # Example of regular route:
