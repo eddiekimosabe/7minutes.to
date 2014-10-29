@@ -22,13 +22,18 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
+# using figaro to handle the secret keys in a yaml file 
 gem 'figaro'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
+# Use Devise for authenticated signin, singout, logout
 gem 'devise'
+# Use foundation for precompiled css/sass styling
 gem 'foundation-rails'
+# Use Faraday to ease the call and manipulation of APIs
 gem 'faraday', '~> 0.9.0'
+# Use pry to allow pry as the environment in the rails console
 gem 'pry-rails', :group => :development
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

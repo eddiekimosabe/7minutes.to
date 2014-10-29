@@ -70,9 +70,23 @@ class User < ActiveRecord::Base
   end
 
   def estimated_time(word_count)
-  	@time = word_count/200.0
 
-  	if @time >= 60
+    if @time >= 60
+      
+  	@time = word_count/200.0 
+    #word_count/words_per_minute. @time = time in minutes
+    #we can change this into a case statement starting from seconds up til days
+    #time_in_seconds = 200-250 words_per_min / 60seconds 
+    #eg. 240 wpm / 60seconds = 4 words_per_second
+    # word_count = 2000
+    # word_count/4 = 500 seconds 
+    #(500/60).floor = 8 minutes
+    #(500%60).ceil = 20 seconds ... etc... 
+    # 1min = 60 seconds
+    # 1hr = 60 minutes = 3600 seconds
+    # every hr compounds by 3600 seconds
+    # 1 day = 24 hrs = 1440 minutes = 86400 seconds
+  	
   		@hour = (@time/60).floor
   		@minutes = (@time%60).ceil
 
